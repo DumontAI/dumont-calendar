@@ -35,11 +35,11 @@ export const WEBAPP_URL_FOR_OAUTH = IS_PRODUCTION || IS_DEV ? WEBAPP_URL : "http
 /** @deprecated use `WEBAPP_URL` */
 export const BASE_URL = WEBAPP_URL;
 export const WEBSITE_URL = ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || "https://cal.com";
-export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Dumont Calendar";
+export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Moveezi";
 export const SUPPORT_MAIL_ADDRESS = process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "noreply@getdumont.ai";
 export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || "Dumont";
 export const SENDER_ID = process.env.NEXT_PUBLIC_SENDER_ID || "Cal";
-export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "Dumont Calendar";
+export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "Moveezi";
 export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || APP_NAME;
 
 // This is the URL from which all Cal Links and their assets are served.
