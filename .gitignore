@@ -117,4 +117,4 @@ agents/devin-knowledge.json
 
 # pagefind
 _pagefind/
-build.log
+build*.log
