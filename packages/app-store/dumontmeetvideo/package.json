@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "name": "@calcom/dumontmeetvideo",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "description": "Dumont's self-hosted video meetings. Every booking gets its own room on meet.getdumont.ai.",
+  "dependencies": {
+    "@calcom/lib": "workspace:*"
+  },
+  "devDependencies": {
+    "@calcom/types": "workspace:*"
+  }
+}
