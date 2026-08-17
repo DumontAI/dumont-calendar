@@ -205,7 +205,7 @@ export const Meeting = ({ title, users = [], profile }: MeetingImageProps) => {
     <Wrapper variant={config.variant}>
       <div tw="h-full flex flex-col justify-start">
         <div tw="flex items-center justify-center" style={{ fontFamily: "cal", fontWeight: 300 }}>
-          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt="Logo" />
+          <img src={`${WEBAPP_URL}${config.logo}`} width={config.logoWidth} alt="Logo" />
           {avatars.length > 0 && (
             <div style={{ color: "#111827" }} tw="font-bold text-[92px] mx-8 bottom-2">
               /
@@ -298,7 +298,7 @@ export const App = ({ name, description, logoUrl }: AppImageProps) => {
   return (
     <Wrapper variant={config.variant}>
       <img
-        src={`${WEBAPP_URL}/${config.logo}`}
+        src={`${WEBAPP_URL}${config.logo}`}
         width={config.logoWidth}
         alt="Logo"
         tw="absolute right-[48px] top-[48px]"
@@ -340,7 +340,7 @@ export const Generic = ({ title, description }: GenericImageProps) => {
     <Wrapper variant={config.variant}>
       <div tw="h-full flex flex-col justify-start">
         <div tw="flex items-center justify-center" style={{ fontFamily: "cal", fontWeight: 300 }}>
-          <img src={`${WEBAPP_URL}/${config.logo}`} width={config.logoWidth} alt="Logo" />
+          <img src={`${WEBAPP_URL}${config.logo}`} width={config.logoWidth} alt="Logo" />
         </div>
 
         <div style={{ color: "#111827" }} tw="relative flex text-[54px] w-full flex-col mt-auto">

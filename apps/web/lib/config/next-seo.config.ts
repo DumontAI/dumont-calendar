@@ -31,8 +31,7 @@ export const seoConfig: {
   },
   defaultNextSeo: {
     twitter: {
-      handle: "@calcom",
-      site: "@calcom",
+      // See apps/web/app/layout.tsx: no handle/site, they credit @calcom.
       cardType: "summary_large_image",
     },
   },

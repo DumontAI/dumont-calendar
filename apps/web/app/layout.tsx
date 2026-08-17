@@ -47,11 +47,6 @@ export const metadata = {
     apple: "/api/logo?type=apple-touch-icon",
     other: [
       {
-        rel: "icon-mask",
-        url: "/safari-pinned-tab.svg",
-        color: "#000000",
-      },
-      {
         url: "/api/logo?type=favicon-16",
         sizes: "16x16",
         type: "image/png",
@@ -68,8 +63,8 @@ export const metadata = {
     "application-TileColor": "#ff0000",
   },
   twitter: {
-    site: "@calcom",
-    creator: "@calcom",
+    // No site/creator: those attribute the card to an X account, and the
+    // upstream default credits @calcom on every customer-facing booking page.
     card: "summary_large_image",
   },
   robots: {
