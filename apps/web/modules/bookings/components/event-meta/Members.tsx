@@ -44,7 +44,7 @@ export const EventMembers = ({
     (profile.name !== users[0].name && schedulingType === SchedulingType.COLLECTIVE);
 
   if (schedulingType === SchedulingType.ROUND_ROBIN && roundRobinHideOrgAndTeam) {
-    return <div className="h-6" />;
+    return <div className="h-16" />;
   }
 
   if (schedulingType === SchedulingType.ROUND_ROBIN && hideOrgTeamAvatar) {
@@ -72,7 +72,7 @@ export const EventMembers = ({
   return (
     <>
       <AvatarGroup
-        size="sm"
+        size="lg"
         className="border-muted"
         items={[
           ...orgOrTeamAvatarItem,
