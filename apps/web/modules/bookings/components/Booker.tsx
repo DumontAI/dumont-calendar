@@ -376,21 +376,12 @@ const BookerComponent = ({
                   isMobile={isMobile}
                   nextSlots={nextSlots}
                   renderOverlay={() => {
-                    if (isEmbed) return null;
-                    return (
-                      <OverlayCalendar
-                        isOverlayCalendarEnabled={isOverlayCalendarEnabled}
-                        connectedCalendars={connectedCalendars}
-                        overlayBusyDates={overlayBusyDates}
-                        onToggleCalendar={onToggleCalendar}
-                        hasSession={hasSession}
-                        handleClickContinue={onClickOverlayContinue}
-                        handleSwitchStateChange={onOverlaySwitchStateChange}
-                        handleClickNoCalendar={() => {
-                          onOverlayClickNoCalendar();
-                        }}
-                      />
-                    );
+                    // "Overlay my calendar" asks the booker to connect their own
+                    // calendar to this domain before they have spoken to anyone.
+                    // That is a privacy ask at the worst moment on a first-touch
+                    // demo page, so it is not offered. Revert by restoring the
+                    // <OverlayCalendar /> render below; the feature is untouched.
+                    return null;
                   }}
                 />
               )}
