@@ -98,9 +98,9 @@ export const PUBLIC_QUICK_AVAILABILITY_ROLLOUT =
 
 /** @deprecated use `WEBAPP_URL` */
 export const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || `https://${process.env.VERCEL_URL}`;
-export const LOGO = "/dumont-logo.png";
-export const LOGO_DARK = "/dumont-logo.png";
-export const LOGO_ICON = "/dumont-icon.png";
+export const LOGO = "/moveezi-logo.png";
+export const LOGO_DARK = "/moveezi-logo.png";
+export const LOGO_ICON = "/moveezi-icon.png";
 export const AVATAR_FALLBACK = "/avatar.svg";
 export const FAVICON_16 = "/favicon-16x16.png";
 export const FAVICON_32 = "/favicon-32x32.png";

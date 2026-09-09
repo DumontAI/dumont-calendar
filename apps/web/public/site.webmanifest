@@ -1,7 +1,7 @@
 {
-    "name": "Dumont Calendar",
-    "short_name": "Dumont Calendar",
-    "description": "Dumont Calendar scheduling",
+    "name": "Moveezi Booking",
+    "short_name": "Moveezi",
+    "description": "Book a Moveezi demo",
     "icons": [
         {
             "src": "/api/logo?type=android-chrome-192",
