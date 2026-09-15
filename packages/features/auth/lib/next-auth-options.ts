@@ -3,6 +3,7 @@ import { updateProfilePhotoGoogle } from "@calcom/app-store/_utils/oauth/updateP
 import { updateProfilePhotoMicrosoft } from "@calcom/app-store/_utils/oauth/updateProfilePhotoMicrosoft";
 import { createGoogleCalendarServiceWithGoogleType } from "@calcom/app-store/googlecalendar/lib/CalendarService";
 import { getIdentityProvider } from "@calcom/features/auth/lib/identityProviders";
+import ZitadelProvider from "next-auth/providers/zitadel";
 import {
   OUTLOOK_CLIENT_ID,
   OUTLOOK_CLIENT_SECRET,
@@ -100,6 +101,16 @@ const { client_id: GOOGLE_CLIENT_ID, client_secret: GOOGLE_CLIENT_SECRET } =
   JSON.parse(GOOGLE_API_CREDENTIALS)?.web || {};
 const GOOGLE_LOGIN_ENABLED = process.env.GOOGLE_LOGIN_ENABLED === "true";
 const IS_GOOGLE_LOGIN_ENABLED = !!(GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET && GOOGLE_LOGIN_ENABLED);
+// Dumont single sign-on. Enabled purely by the presence of its three env
+// vars, the same shape as the Google and Outlook flags above, so nothing
+// turns on by accident in an environment that has not been configured.
+const ZITADEL_ISSUER = process.env.ZITADEL_ISSUER;
+const ZITADEL_CLIENT_ID = process.env.ZITADEL_CLIENT_ID;
+const ZITADEL_CLIENT_SECRET = process.env.ZITADEL_CLIENT_SECRET;
+export const IS_DUMONT_LOGIN_ENABLED = !!(
+  ZITADEL_ISSUER && ZITADEL_CLIENT_ID && ZITADEL_CLIENT_SECRET
+);
+
 const ORGANIZATIONS_AUTOLINK =
   process.env.ORGANIZATIONS_AUTOLINK === "1" || process.env.ORGANIZATIONS_AUTOLINK === "true";
 
@@ -350,6 +361,33 @@ if (OUTLOOK_LOGIN_ENABLED && OUTLOOK_CLIENT_ID && OUTLOOK_CLIENT_SECRET) {
           name: profile.name,
           email: profile.email,
           image: null,
+        };
+      },
+    })
+  );
+}
+
+if (IS_DUMONT_LOGIN_ENABLED) {
+  providers.push(
+    ZitadelProvider({
+      issuer: ZITADEL_ISSUER,
+      clientId: ZITADEL_CLIENT_ID as string,
+      clientSecret: ZITADEL_CLIENT_SECRET as string,
+      // Dumont is the single source of identity, so an address that
+      // matches an existing local account is the same person.
+      allowDangerousEmailAccountLinking: true,
+      authorization: { params: { scope: "openid email profile" } },
+      // `picture` is the whole point of COR-66: it is what carries a
+      // photo set once in ZITADEL through to the booking page. The
+      // adapter maps `image` onto users.avatarUrl, and getAbsoluteAvatarUrl
+      // passes an absolute URL straight through, so an external ZITADEL
+      // asset URL renders without needing a row in the avatars table.
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name ?? profile.preferred_username ?? null,
+          email: profile.email,
+          image: profile.picture ?? null,
         };
       },
     })

@@ -105,6 +105,7 @@ export default function Login({
   csrfToken,
   isGoogleLoginEnabled,
   isOutlookLoginEnabled,
+  isDumontLoginEnabled,
   totpEmail,
 }: PageProps) {
   const searchParams = useCompatSearchParams();
@@ -170,7 +171,7 @@ export default function Login({
     else setErrorMessage(errorMessages[res.error] || t("something_went_wrong"));
   };
 
-  const showSocialLogin = isGoogleLoginEnabled || isOutlookLoginEnabled;
+  const showSocialLogin = isGoogleLoginEnabled || isOutlookLoginEnabled || isDumontLoginEnabled;
   const showSignupLink =
     process.env.NEXT_PUBLIC_DISABLE_SIGNUP !== "true" && searchParams?.get("register") !== "false";
 
@@ -211,6 +212,22 @@ export default function Login({
                       <GoogleIcon />
                       <span>{t("signin_with_google")}</span>
                       {lastUsed === "google" && <LastUsed />}
+                    </Button>
+                  )}
+                  {isDumontLoginEnabled && (
+                    <Button
+                      className="w-full py-1"
+                      disabled={formState.isSubmitting}
+                      data-testid="dumont"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        setLastUsed("dumont");
+                        await signIn("zitadel", {
+                          callbackUrl,
+                        });
+                      }}>
+                      <span>Continue with Dumont</span>
+                      {lastUsed === "dumont" && <LastUsed />}
                     </Button>
                   )}
                   {isOutlookLoginEnabled && (

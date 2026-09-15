@@ -9,6 +9,11 @@ export const NEXTAUTH_TO_IDENTITY_PROVIDER: Record<string, IdentityProvider> = {
   google: IdentityProvider.GOOGLE,
   saml: IdentityProvider.SAML,
   "saml-idp": IdentityProvider.SAML,
+  // Dumont SSO. Deliberately reuses SAML rather than adding a ZITADEL
+  // enum value: the enum records "authenticates through an external IdP
+  // rather than a local password", which is exactly true, and a new value
+  // would need a Prisma migration that conflicts on every upstream merge.
+  zitadel: IdentityProvider.SAML,
   cal: IdentityProvider.CAL,
 };
 

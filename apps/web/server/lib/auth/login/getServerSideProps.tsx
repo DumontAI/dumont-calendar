@@ -1,3 +1,4 @@
+import { IS_DUMONT_LOGIN_ENABLED } from "@calcom/features/auth/lib/next-auth-options";
 import process from "node:process";
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { WEBSITE_URL } from "@calcom/lib/constants";
@@ -89,6 +90,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       csrfToken: await getCsrfToken(context),
       isGoogleLoginEnabled: IS_GOOGLE_LOGIN_ENABLED,
       isOutlookLoginEnabled: false,
+      isDumontLoginEnabled: IS_DUMONT_LOGIN_ENABLED,
       totpEmail,
     },
   };
