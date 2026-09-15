@@ -51,7 +51,9 @@ COPY apps/api/v2 ./apps/api/v2
 COPY packages ./packages
 
 RUN yarn config set httpTimeout 1200000
-RUN npx turbo prune --scope=@calcom/web --scope=@calcom/trpc --docker
+# Pinned: npx resolves the latest turbo otherwise, and 2.10.13 rejects the
+# repeated --scope flag this command uses. package.json declares 2.7.1.
+RUN npx turbo@2.7.1 prune --scope=@calcom/web --scope=@calcom/trpc --docker
 RUN yarn install
 # Build and make embed servable from web/public/embed folder
 RUN yarn workspace @calcom/trpc run build
