@@ -63,6 +63,7 @@ type UserWithProfiles = NonNullable<
 interface ExtendedOAuthProfile extends Profile {
   email_verified?: boolean; // Google/OIDC standard
   xms_edov?: boolean | string | number; // Azure AD specific
+  picture?: string; // OIDC standard, carries the ZITADEL avatar URL
 }
 
 // This adapts our internal user model to what NextAuth expects
@@ -871,6 +872,31 @@ export const getOptions = ({
       }
       if (account?.provider) {
         const idP = getIdentityProvider(account.provider);
+
+        // Dumont SSO: carry the ZITADEL photo through on every sign-in, not
+        // just on account creation. The adapter only sets avatarUrl when it
+        // creates a user, and everyone here already had an account, so without
+        // this a photo set in ZITADEL never reaches the booking page.
+        if (account.provider === "zitadel" && user.id) {
+          const picture = (profile as ExtendedOAuthProfile | undefined)?.picture;
+          if (typeof picture === "string" && picture.length > 0) {
+            try {
+              const existing = await prisma.user.findUnique({
+                where: { id: Number(user.id) },
+                select: { avatarUrl: true },
+              });
+              if (existing && existing.avatarUrl !== picture) {
+                await prisma.user.update({
+                  where: { id: Number(user.id) },
+                  data: { avatarUrl: picture },
+                });
+              }
+            } catch (e) {
+              // A photo is cosmetic; never block a login on it.
+              log.warn("callbacks:signIn - could not sync Dumont avatar", { error: String(e) });
+            }
+          }
+        }
 
         if (!idP) {
           log.warn("callbacks:signIn - unknown provider, rejecting login", {
