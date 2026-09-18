@@ -6,7 +6,10 @@ import Row from "./Row";
 const CommentIE = ({ html = "" }) => <RawHtml html={`<!--[if mso | IE]>${html}<![endif]-->`} />;
 
 const EmailBodyLogo = () => {
-  const image = `${WEBAPP_URL}/emails/logo.png`;
+  // Version token: mail clients cache remote images by URL, so replacing the
+// file alone leaves everyone who saw the old one still seeing it. Bump on
+// every change to this asset.
+const image = `${WEBAPP_URL}/emails/logo.png?v=moveezi-2`;
 
   return (
     <>
