@@ -47,9 +47,12 @@ export const EMAIL_FROM_NAME = process.env.EMAIL_FROM_NAME || APP_NAME;
 // As website isn't setup for preview environments, use the webapp url instead
 // If it's a .vercel.app domain, keep it.
 // Else use the website url if defined and finally fallback to the webapp url
-export const CAL_URL = new URL(WEBAPP_URL).hostname.endsWith(".vercel.app")
-  ? WEBAPP_URL
-  : ensureProtocol(process.env.NEXT_PUBLIC_WEBSITE_URL) || WEBAPP_URL;
+// Upstream prefers the website URL here so cal.com links read cal.com rather
+// than app.cal.com. That assumes one domain serves both the marketing site and
+// the app's assets. Ours do not: www.moveezi.com is a static site with no
+// /api/avatar, so preferring it made every avatar a 404. Cal Links and their
+// assets are served by the app, so this is WEBAPP_URL.
+export const CAL_URL = WEBAPP_URL;
 
 export const IS_CALCOM =
   WEBAPP_URL &&
